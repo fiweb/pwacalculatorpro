@@ -152,21 +152,21 @@
     </div>
 
     <script src="script.js"></script>
-    <!-- PWA Service Worker Registration -->
+
+    <!-- PWA Service Worker Registration - Improved -->
     <script>
       if ("serviceWorker" in navigator) {
-        window.addEventListener("load", async () => {
-          try {
-            const registration = await navigator.serviceWorker.register(
-              "./sw.js"
-            );
-            console.log(
-              "ServiceWorker registered successfully with scope:",
-              registration.scope
-            );
-          } catch (error) {
-            console.error("ServiceWorker registration failed:", error);
-          }
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("sw.js", {
+              scope: "./",
+            })
+            .then((registration) => {
+              console.log("SW registered successfully:", registration.scope);
+            })
+            .catch((error) => {
+              console.error("SW registration failed:", error);
+            });
         });
       }
 
@@ -206,6 +206,19 @@
         installContainer.style.display = "none";
         console.log("App was installed");
       });
+    </script>
+
+    <!-- Service Worker Debug -->
+    <script>
+      // Check if the service worker is registered
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          console.log("Registered service workers:", registrations);
+          if (registrations.length === 0) {
+            console.warn("No service workers registered!");
+          }
+        });
+      }
     </script>
   </body>
 </html>

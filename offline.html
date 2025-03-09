@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline - Proportion Calculator</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+        text-align: center;
+        padding: 20px;
+      }
+      .offline-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+      }
+      h1 {
+        color: #4caf50;
+      }
+      p {
+        line-height: 1.6;
+      }
+      .icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+      .retry-button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+      }
+      .retry-button:hover {
+        background-color: #3d8b40;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="offline-container">
+      <div class="icon">📡</div>
+      <h1>You're Offline</h1>
+      <p>
+        Sorry, you're currently offline and we can't access the page you
+        requested.
+      </p>
+      <p>Please check your internet connection and try again.</p>
+      <button class="retry-button" onclick="window.location.reload()">
+        Try Again
+      </button>
+    </div>
+  </body>
+</html>
