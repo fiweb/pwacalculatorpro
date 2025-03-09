@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proportion Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#4caf50" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="PropCalc" />
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
+    <!-- Add a fallback for browsers that don't support service workers -->
+    <meta
+      name="description"
+      content="A proportion calculator and standard calculator in one app"
+    />
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="container proportion-container">
+        <div class="theme-toggle">
+          <button id="theme-toggle-button">
+            <div class="theme-icon-container"></div>
+          </button>
+        </div>
+        <h1>Proportion Calculator</h1>
+        <div class="input-group">
+          <label for="a">Value A:</label>
+          <input type="text" id="a" name="a" placeholder="Enter value or x" />
+        </div>
+        <div class="input-group">
+          <label for="b">Value B:</label>
+          <input type="text" id="b" name="b" placeholder="Enter value or x" />
+        </div>
+        <div class="equal">=</div>
+        <div class="input-group">
+          <label for="c">Value C:</label>
+          <input type="text" id="c" name="c" placeholder="Enter value or x" />
+        </div>
+        <div class="input-group">
+          <label for="d">Value D:</label>
+          <input type="text" id="d" name="d" placeholder="Enter value or x" />
+        </div>
+        <button id="calculate">Calculate</button>
+        <button id="reset">Reset</button>
+
+        <!-- Calculator Toggle Button for Mobile -->
+        <div class="calculator-toggle">
+          <button id="calculator-toggle-button" aria-label="Toggle Calculator">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="4" y="3" width="16" height="18" rx="2" ry="2"></rect>
+              <line x1="8" y1="7" x2="16" y2="7"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+              <line x1="8" y1="17" x2="16" y2="17"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="container calculator-container">
+        <h1>Calculator</h1>
+        <div class="calculator">
+          <div class="calculator-display">
+            <input type="text" id="calculator-input" readonly />
+          </div>
+          <div class="calculator-buttons">
+            <div class="calculator-row">
+              <button class="calc-btn" data-value="7">7</button>
+              <button class="calc-btn" data-value="8">8</button>
+              <button class="calc-btn" data-value="9">9</button>
+              <button class="calc-btn operator" data-value="/">/</button>
+            </div>
+            <div class="calculator-row">
+              <button class="calc-btn" data-value="4">4</button>
+              <button class="calc-btn" data-value="5">5</button>
+              <button class="calc-btn" data-value="6">6</button>
+              <button class="calc-btn operator" data-value="*">×</button>
+            </div>
+            <div class="calculator-row">
+              <button class="calc-btn" data-value="1">1</button>
+              <button class="calc-btn" data-value="2">2</button>
+              <button class="calc-btn" data-value="3">3</button>
+              <button class="calc-btn operator" data-value="-">-</button>
+            </div>
+            <div class="calculator-row">
+              <button class="calc-btn" data-value="0">0</button>
+              <button class="calc-btn" data-value=".">.</button>
+              <button class="calc-btn" id="calc-backspace">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
+                  ></path>
+                  <line x1="18" y1="9" x2="12" y2="15"></line>
+                  <line x1="12" y1="9" x2="18" y2="15"></line>
+                </svg>
+              </button>
+              <button class="calc-btn operator" data-value="+">+</button>
+            </div>
+            <div class="calculator-row">
+              <button class="calc-btn" id="calc-clear">C</button>
+              <button class="calc-btn equals" id="calc-equals">=</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add custom install button -->
+    <div
+      id="install-container"
+      style="display: none; text-align: center; margin-top: 20px"
+    >
+      <button
+        id="install-button"
+        style="
+          background-color: #4caf50;
+          color: white;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      >
+        Install App
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", async () => {
+          try {
+            const registration = await navigator.serviceWorker.register(
+              "./sw.js"
+            );
+            console.log(
+              "ServiceWorker registered successfully with scope:",
+              registration.scope
+            );
+          } catch (error) {
+            console.error("ServiceWorker registration failed:", error);
+          }
+        });
+      }
+
+      // Handle PWA install prompt
+      let deferredPrompt;
+      const installContainer = document.getElementById("install-container");
+      const installButton = document.getElementById("install-button");
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        // Prevent Chrome 67+ from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+        // Show the install button
+        installContainer.style.display = "block";
+      });
+
+      installButton.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+
+        // Show the install prompt
+        deferredPrompt.prompt();
+
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+
+        // Clear the saved prompt since it can't be used again
+        deferredPrompt = null;
+
+        // Hide the install button
+        installContainer.style.display = "none";
+      });
+
+      // Hide button if app is already installed
+      window.addEventListener("appinstalled", () => {
+        installContainer.style.display = "none";
+        console.log("App was installed");
+      });
+    </script>
+  </body>
+</html>
